@@ -1,0 +1,90 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% comment %} css file {% endcomment %}
+
+{% block extrastyle %}{{ block.super }}
+  <link rel="stylesheet" href="{% static "admin/css/dashboard.css" %}">
+{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% comment %} Nav-bar top Starts {% endcomment %}
+
+{% block nav-breadcrumbs %}
+    <!-- accounts part starts -->
+    <div class="breadcrumbs mt-3 mx-5" style="border-radius: 3rem; display: flex;">
+        <span class="breadcrumbs d-flex align-items-center gap-2 text-muted fs-6">
+            <a href="{% url 'admin:index' %}" class="text-decoration-none text-white d-flex align-items-center gap-1 fw-semibold">
+                <i class="bi bi-house-door-fill mx-1"></i>
+                <span>Home</span>
+            </a>
+        </span>    
+    </div>
+    <!-- accounts part ends -->
+{% endblock %}
+
+{% comment %} Nav-bar top Ends {% endcomment %}
+
+
+
+{% comment %} nav-bar side Starts  {% endcomment %}
+
+{% comment %} {% block nav-sidebar %}{% endblock %} {% endcomment %}
+
+{% comment %} nav-bar side Ends  {% endcomment %}
+
+
+
+{% comment %} main content starts {% endcomment %}
+
+{% block content %}
+<div id="content-main">
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}
+
+{% comment %} main content Ends {% endcomment %}
+
+
+
+{% comment %} Side bar starts for Recent Action {% endcomment %}
+
+{% block sidebar %}
+
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% translate 'Recent actions' %}</h2>
+        <h3>{% translate 'My actions' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% translate 'None available' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                <span class="visually-hidden">{% if entry.is_addition %}{% translate 'Added:' %}{% elif entry.is_change %}{% translate 'Changed:' %}{% elif entry.is_deletion %}{% translate 'Deleted:' %}{% endif %}</span>
+                {% if entry.is_deletion or not entry.get_admin_url %}
+                    {{ entry.object_repr }}
+                {% else %}
+                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                {% endif %}
+                <br>
+                {% if entry.content_type %}
+                    <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+                {% else %}
+                    <span class="mini quiet">{% translate 'Unknown content' %}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% comment %} Side bar Ends for Recent Action {% endcomment %}

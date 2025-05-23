@@ -1,0 +1,144 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+  <link rel="stylesheet" href="{% static "admin/css/login.css" %}">
+{{ form.media }}
+{% endblock %}
+
+<!-- {% block bodyclass %}{{ block.super }} login{% endblock %} -->
+
+<!-- {% block usertools %}{% endblock %} -->
+
+<!-- {% block nav-global %}{% endblock %} -->
+
+<!-- {% block nav-sidebar %}{% endblock %} -->
+
+<!-- {% block content_title %}{% endblock %} -->
+
+<!-- {% block nav-breadcrumbs %}{% endblock %} -->
+
+{% block content %} 
+
+{% comment %} Django's Admin header starts {% endcomment %}
+
+<!-- {% block header %}{% endblock  %} -->
+
+{% comment %} Django's Admin header ends {% endcomment %}
+
+<div id="content-main">
+  <div class="container-fluid py-5">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-xl-12">  {% comment %}  sizing of the form  {% endcomment %}
+        <div class="card rounded-3 shadow text-black">
+          <div class="row g-0">
+            <div class="col-lg-12">
+              <div class="card-body p-4">
+                <div class="text-center mb-5">
+                  <img src="https://airpro.in/wp-content/uploads/2017/02/logo.png" style="width: 185px;" alt="logo">
+                  {% comment %} <h4 class="mt-1 mb-4" style="color: #264b5d;">{{ site_header|default:_('AIRPRO CLOUD LOGIN') }}</h4> {% endcomment %}
+                  
+                  {% if form.errors and not form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      {% if form.errors.items|length == 1 %}
+                        {% translate "Please correct the error below." %}
+                      {% else %}
+                        {% translate "Please correct the errors below." %}{% endif %}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endif %}
+
+                  {% if form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      {% for error in form.non_field_errors %}
+                        {{ error }}
+                      {% endfor %}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endif %}
+                </div>
+
+                <form action="{{ app_path }}" method="post" id="login-form">
+                  {% csrf_token %}
+
+                  {% comment %} username starts {% endcomment %}
+                  
+                  <div class="mb-4">
+                    <label for="id_username" class="required fw-bold mb-2" style="color: #264b5d;">
+                        <i class="fas fa-user me-1"></i> {{ form.username.label }}:
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text text-white" style="background-color: #264b5d;;">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input id="id_username" maxlength="254" name="username" type="text" class="form-control shadow-sm p-2" style="border-color: #264b5d;" placeholder="Enter your username">
+                    </div>
+                    <small class="text-danger">{{ form.username.errors }}</small>
+                  </div>
+
+                  {% comment %} username ends {% endcomment %}
+                  
+                  {% comment %} Password starts {% endcomment %}
+
+                  <div class="mb-4">
+                    <label for="id_password" class="required fw-bold mb-2" style="color:#264b5d;">
+                        <i class="fas fa-lock me-1"></i> {% trans 'Password:' %}
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text text-white" style="background-color:#264b5d;">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input id="id_password" name="password" type="password" class="form-control shadow-sm p-2" style="border-color:#264b5d;" placeholder="Enter your password">
+                        <span class="input-group-text bg-light" onclick="togglePassword()" style="border-color:#264b5d;">
+                            <i class="fas fa-eye" id="toggleEye" style="color:#264b5d;" ></i>
+                        </span>
+                    </div>
+                    <small class="text-danger">{{ form.password.errors }}</small>
+                    <input type="hidden" name="next" value="{{ next }}">
+                  </div>
+                  <script>
+                    function togglePassword() {
+                        var passwordInput = document.getElementById("id_password");
+                        var toggleIcon = document.getElementById("toggleEye");
+                        if (passwordInput.type === "password") {
+                            passwordInput.type = "text";
+                            toggleIcon.classList.replace("fa-eye", "fa-eye-slash");
+                        } else {
+                            passwordInput.type = "password";
+                            toggleIcon.classList.replace("fa-eye-slash", "fa-eye");
+                        }
+                    }
+                  </script>
+
+                  {% comment %} Password ends {% endcomment %}
+                
+
+                  <div class="d-grid gap-2">
+                    {% comment %} <div class="submit-row">
+                      <input type="submit" class="btn btn-primary" value="{% translate 'Log in' %}">
+                    </div> {% endcomment %}
+                    <div class="submit-row text-center mt-3">
+                      <button type="submit" class="btn btn-lg btn-lg rounded-pill shadow-sm px-4 mb-4" style="background-color:#264b5d; border-color:#264b5d; color: white;">
+                          <i class="fas fa-sign-in-alt me-2"></i> {% translate 'Log in' %}
+                      </button>
+                    </div>
+                  
+                    {% url 'admin_password_reset' as password_reset_url %}
+                    {% if password_reset_url %}
+                    <div class="text-center mt-2">
+                      <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+                    </div>
+                    {% endif %}
+                  </div>
+                  
+                </form>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+{% endblock %}

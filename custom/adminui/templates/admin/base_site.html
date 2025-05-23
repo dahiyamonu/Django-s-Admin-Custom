@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+
+
+{% comment %} top header starts {% endcomment %}
+
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></div>
+
+{% comment %} top header ends {% endcomment %}
+
+
+{% comment %} Theme Toggle starts to switch themes (i.e dark, light, system default)  {% endcomment %}
+
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% comment %} Theme Toggle ends to switch themes (i.e dark, light, system default)  {% endcomment %}
+
+
+{% block nav-global %}{% endblock %}
