@@ -22,8 +22,7 @@
 *  Installation
   1) Clone this repository:
   
-     git clone https://github.com/your-username/django-admin-bootstrap5.git
-     cd django-admin-bootstrap5
+     git clone https://github.com/dahiyamonu/Django-s-Admin-Custom.git
   
   2) Create and activate a virtual environment (optional but recommended):
 
