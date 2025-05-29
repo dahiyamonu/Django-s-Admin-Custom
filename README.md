@@ -15,9 +15,9 @@
 *  Getting Started
 
   **  Prerequisites
-    *** Python 3.x
-    *** Django 3.x or 4.x
-    *** Bootstrap 5 (included via CDN or locally)
+      ** Python 3.x
+      ** Django 3.x or 4.x
+      ** Bootstrap 5 (included via CDN or locally)
 
 *  Installation
   1) Clone this repository:
@@ -47,7 +47,7 @@
 
 *  Usage
 
-  *** The Bootstrap 5 CSS is linked in the overridden admin/base_site.html.
-  *** Custom templates reside in your project’s templates/admin/ directory.
-  *** Override specific admin templates as needed (e.g., change_list.html, change_form.html, login.html).
-  *** Apply Bootstrap 5 classes to buttons, forms, tables, and navigation elements in the template files.
+  ** The Bootstrap 5 CSS is linked in the overridden admin/base_site.html.
+  ** Custom templates reside in your project’s templates/admin/ directory.
+  ** Override specific admin templates as needed (e.g., change_list.html, change_form.html, login.html).
+  ** Apply Bootstrap 5 classes to buttons, forms, tables, and navigation elements in the template files.
