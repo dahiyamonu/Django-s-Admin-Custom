@@ -14,10 +14,10 @@
 
 *  Getting Started
 
-  **  Prerequisites
-      1) Python 3.x
-      2) Django 3.x or 4.x
-      3) Bootstrap 5 (included via CDN or locally)
+  *  Prerequisites
+        1) Python 3.x
+        2) Django 3.x or 4.x
+        3) Bootstrap 5 (included via CDN or locally)
 
 *  Installation
   1) Clone this repository:
